@@ -24,7 +24,7 @@ for i, report in enumerate(reports):
         if j == len(report[:-1])-1:
             part_1 += 1
 
-
+print(f"{part_1=}")
 
 # Part 2
 
@@ -58,5 +58,4 @@ for i, report in enumerate(reports):
         if problem_dampener(report):
             part_2 += 1
 
-print(f"{part_1=}")
 print(f"{part_2=}")
