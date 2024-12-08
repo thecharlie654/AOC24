@@ -107,14 +107,36 @@ def check_loops(input):
             x = x+dx
             y = y+dy
 
+def get_possible_obstacles(input):
+    possible_obstacles = set()
+    input = copy.deepcopy(input)
+    x, y = get_guard_position(input)
+    while True:
+        possible_obstacles.add((x, y))
+        guard_char = get_map_item(x, y, input)
+        dx, dy = get_guard_direction(input, x, y)
+        next_char = get_map_item(x+dx, y+dy, input)
+        if next_char == None:
+            input[y][x] = "X"
+            break
+        elif next_char == "#":
+            new_direction_index = (directions.index(guard_char) + 1) % 4
+            input[y][x] = directions[new_direction_index]
+        else:
+            input[y][x] = "X"
+            input[y+dy][x+dx] = guard_char
+            x = x+dx
+            y = y+dy
+    return possible_obstacles
+
 part_2 = 0
-for y, line in enumerate(input_f):
-    for x, letter in enumerate(line):
-        if letter == ".":
-            input_modified = copy.deepcopy(input_f)
-            input_modified[y][x] = "#"
-            if check_loops(input_modified):
-                part_2 += 1
+possible_obstacles = get_possible_obstacles(input_f)
+for x, y in possible_obstacles:
+    letter = input_f[y][x]
+    if letter == ".":
+        input_modified = copy.deepcopy(input_f)
+        input_modified[y][x] = "#"
+        if check_loops(input_modified):
+            part_2 += 1
 
 print(f"{part_2=}")
-
