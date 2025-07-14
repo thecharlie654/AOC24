@@ -76,8 +76,8 @@ for i, machine in enumerate(machines):
         total_cost += a_presses * 3
         total_cost += b_presses
 
-part_2 = int(total_cost)
-print(f"{part_2=}")
+part_1 = int(total_cost)
+print(f"{part_1=}")
 
 # Part 2
 import numpy as np
