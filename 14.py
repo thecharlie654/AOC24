@@ -57,20 +57,20 @@ with open("input.txt") as f:
         robots.append([robot_position, robot_velocity])
 
 i = 0
-while i < 10000:
-    output = ""
-    output += str(i + 1) + "\n"
+stop = False
+while stop is False:
     for robot in robots:
         robot[0][0] = (robot[0][0] + robot[1][0]) % width
         robot[0][1] = (robot[0][1] + robot[1][1]) % height
     robot_locations = [robot[0] for robot in robots]
+    grid = [[" " for x in range(width)] for y in range(height)]
+    for x, y in robot_locations:
+        grid[y][x] = "X"
     for y in range(height):
-        for x in range(width):
-            if [x, y] in robot_locations:
-                output += "X"
-            else:
-                output += " "
-        output += "\n"
-    with open("output.txt", "a") as f:
-        f.write(output)
+        line = "".join(grid[y])
+        if line.find("X" * 10) != -1:
+            part_2 = i + 1
+            stop = True
     i += 1
+
+print(f"{part_2=}")
